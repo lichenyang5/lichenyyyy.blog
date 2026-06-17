@@ -8,6 +8,8 @@ export default defineConfig({
   // 换绑域名后改这里即可。
   site: 'https://www.lichenyyyy.top',
   trailingSlash: 'ignore',
+  // 关闭本地开发左下角的 Astro Dev Toolbar，让本地预览也保持干净
+  devToolbar: { enabled: false },
   integrations: [sitemap()],
   markdown: {
     // 代码高亮：浅色主题，贴合白底极简风格

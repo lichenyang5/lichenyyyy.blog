@@ -29,10 +29,10 @@ const posts = defineCollection({
       tags: z.array(z.string()).default([]),
       /** 分类（单选） */
       category: z.string(),
-      /** 来源平台，如 juejin（可选） */
+      /** 来源平台，如 juejin / original（可选） */
       source: z.string().optional(),
-      /** 原文链接（可选） */
-      sourceUrl: z.string().url().optional(),
+      /** 原文链接（可选；允许留空字符串 ""，按「没有原文」处理） */
+      sourceUrl: z.union([z.string().url(), z.literal('')]).optional(),
       /** 草稿：true 时不在生产环境展示 */
       draft: z.boolean().default(false),
       /** 可选封面图（预留） */

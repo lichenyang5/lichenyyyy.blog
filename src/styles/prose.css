@@ -1,53 +1,56 @@
 /* ============================================================
-   正文排版 —— 舒服的阅读体验
-   行高 1.8 / 段落间距清楚 / 标题层级明显 / 代码块清晰 / 移动端不挤
+   正文排版 —— 参考掘金文章页的阅读体验，但保持极简
+   行高 1.85 / 段落不挤 / 标题层级明显 / 代码块舒服 / 不撑破页面
    ============================================================ */
 
 .prose {
   font-size: 16px;
-  line-height: 1.8;
+  line-height: 1.85;
   color: var(--text);
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
-/* 段落与间距 */
+/* 段落：间距略微加大，中文阅读更舒服 */
 .prose p {
-  margin-block: 0 1.25em;
+  margin: 0 0 1.4em;
 }
 
 .prose > :first-child {
   margin-top: 0;
 }
 
-/* 标题层级：靠字号、字重、上方留白拉开层次 */
+/* 标题层级：顶部留白 > 底部留白，字号不过大 */
 .prose h2 {
-  font-size: 1.5em;
+  font-size: 1.45rem;
   font-weight: 650;
   line-height: 1.35;
-  margin-block: 2em 0.8em;
-  padding-bottom: 0.3em;
+  margin-top: 2.4em;
+  margin-bottom: 0.8em;
+  padding-bottom: 0.35em;
   border-bottom: 1px solid var(--border);
 }
 
 .prose h3 {
-  font-size: 1.2em;
+  font-size: 1.18rem;
   font-weight: 650;
-  margin-block: 1.8em 0.6em;
+  line-height: 1.4;
+  margin-top: 1.8em;
+  margin-bottom: 0.6em;
 }
 
 .prose h4 {
-  font-size: 1.05em;
+  font-size: 1.05rem;
   font-weight: 650;
-  margin-block: 1.5em 0.5em;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
 }
 
-/* 标题锚点（hover 时出现 #） */
 .prose :is(h2, h3, h4) {
   scroll-margin-top: 24px;
 }
 
-/* 链接：正文里的链接带下划线，克制的蓝 */
+/* 链接：克制的蓝，带下划线 */
 .prose a {
   color: var(--link);
   text-decoration: underline;
@@ -58,54 +61,61 @@
   color: var(--link-hover);
 }
 
-/* 列表 */
+/* 列表：项与项之间留一点空隙，不要贴太紧 */
 .prose :is(ul, ol) {
-  margin-block: 0 1.25em;
-  padding-left: 1.4em;
+  margin: 0 0 1.4em;
+  padding-left: 1.5em;
 }
 .prose li {
-  margin-block: 0.35em;
+  margin: 0.5em 0;
 }
 .prose li::marker {
   color: var(--muted);
 }
 .prose li > :is(ul, ol) {
-  margin-block: 0.35em;
+  margin: 0.5em 0;
+}
+.prose li > p {
+  margin: 0.5em 0;
 }
 
-/* 引用块：左侧细线，灰字，不做厚重背景 */
+/* 引用块：左侧 4px 细线，灰字，无背景 */
 .prose blockquote {
   margin: 1.5em 0;
-  padding: 0.2em 0 0.2em 1.1em;
-  border-left: 3px solid var(--border);
+  padding: 0.2em 0 0.2em 1em;
+  border-left: 4px solid var(--border);
   color: var(--muted);
 }
-.prose blockquote p:last-child {
+.prose blockquote :is(p, ul, ol):last-child {
   margin-bottom: 0;
 }
 
-/* 行内代码 */
+/* 行内代码：浅灰底、略小、圆角，不抢眼 */
 .prose :not(pre) > code {
   font-family: var(--font-mono);
-  font-size: 0.875em;
+  font-size: 0.9em;
   background: var(--code-bg);
-  padding: 0.15em 0.4em;
+  padding: 0.15em 0.35em;
   border-radius: 4px;
   word-break: break-word;
 }
 
-/* 代码块：浅灰背景、圆角 8px、横向滚动 */
+/* 代码块：接近 GitHub 风格的浅灰、圆角 8px、横向滚动 */
 .prose pre {
   font-family: var(--font-mono);
-  font-size: 0.85em;
-  line-height: 1.6;
-  background: var(--code-bg) !important;
+  font-size: 0.875em;
+  line-height: 1.7;
+  /* shiki 会给 <pre> 注入行内底色，这里强制成统一的浅灰 */
+  background: #f6f8fa !important;
   padding: 16px 18px;
-  border-radius: 8px;
   border: 1px solid var(--border);
+  border-radius: 8px;
   overflow-x: auto;
-  margin-block: 1.4em;
+  margin: 1.5em 0;
   -webkit-overflow-scrolling: touch;
+  /* 更干净的滚动条（Firefox） */
+  scrollbar-width: thin;
+  scrollbar-color: #d0d7de transparent;
 }
 .prose pre > code {
   background: transparent;
@@ -114,15 +124,30 @@
   font-size: inherit;
   white-space: pre;
 }
+/* 更干净的滚动条（WebKit / Chromium） */
+.prose pre::-webkit-scrollbar {
+  height: 8px;
+}
+.prose pre::-webkit-scrollbar-thumb {
+  background: #d0d7de;
+  border-radius: 4px;
+}
+.prose pre::-webkit-scrollbar-track {
+  background: transparent;
+}
 
-/* 表格：细线、留白，不做厚重卡片 */
+/* 表格：横向滚动、边框清晰、表头浅灰，不撑破页面 */
+.prose .table-wrap,
 .prose table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-block: 1.6em;
-  font-size: 0.95em;
   display: block;
+  width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.prose table {
+  border-collapse: collapse;
+  margin: 1.6em 0;
+  font-size: 0.95em;
 }
 .prose :is(th, td) {
   border: 1px solid var(--border);
@@ -133,18 +158,23 @@
 .prose th {
   background: var(--code-bg);
   font-weight: 650;
+  white-space: nowrap;
 }
 
-/* 图片 */
+/* 图片：不撑破页面，轻微圆角，无阴影 */
 .prose img {
   display: block;
+  max-width: 100%;
+  height: auto;
   margin: 1.6em auto;
-  border-radius: 8px;
+  border-radius: 6px;
 }
 
 /* 分隔线 */
 .prose hr {
-  margin-block: 2.5em;
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2.6em 0;
 }
 
 /* 强调 */
@@ -153,7 +183,7 @@
   color: var(--text);
 }
 
-/* 移动端：略收紧字号，保证左右不挤 */
+/* 移动端：代码块收一点圆角和 padding，左右不挤 */
 @media (max-width: 480px) {
   .prose pre {
     border-radius: 6px;

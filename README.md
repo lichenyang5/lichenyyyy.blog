@@ -20,6 +20,7 @@
 ```bash
 npm install      # 安装依赖
 npm run dev      # 启动开发服务器（默认 http://localhost:4321）
+npm run check    # 类型 / frontmatter 校验（astro check）
 npm run build    # 构建静态站点到 dist/
 npm run preview  # 本地预览构建产物
 ```
@@ -30,6 +31,7 @@ npm run preview  # 本地预览构建产物
 
 ```
 public/            favicon.svg、og-image.png 等静态资源（原样拷贝）
+文章模板.md         新文章模板，复制到 src/content/posts/ 改名即可
 src/
   consts.ts        站点信息、导航、社交链接、关注方向（改站点先动这里）
   content/
@@ -40,34 +42,104 @@ src/
   pages/           路由页面（首页、列表、详情、标签、归档、项目、关于、RSS、404）
   styles/          global.css（全局）、prose.css（正文排版）
   utils/           posts.ts（取文章/标签/归档/阅读时间）、date.ts（日期）
-astro.config.mjs   站点地址、sitemap、代码高亮主题
+astro.config.mjs   站点地址、sitemap、代码高亮主题、devToolbar 开关
 ```
 
-## 新增文章
+## 如何新增一篇博客
 
-1. 在 `src/content/posts/` 下新建一个 `.md` 文件。
-2. **文件名直接用中文**，URL 会据此生成（空格会被换成连字符）。例如：
-   - 文件 `WebSocket 与 SSE 区别.md` → 访问路径 `/posts/WebSocket-与-SSE-区别`
-   - 文件 `动态加载与延迟加载.md` → 访问路径 `/posts/动态加载与延迟加载`
-3. 顶部写好 frontmatter（见下），正文从二级标题 `##` 开始写即可——**不用再写一级标题 `#`**，文章大标题由 `title` 字段渲染。
+这是一个 **Astro 静态博客**，新增文章**不是**随便放到某个 blog 文件夹，而是把 Markdown 文件放进固定目录：
 
-### frontmatter 字段说明
+```text
+src/content/posts/
+```
 
-```yaml
+例如：
+
+```text
+src/content/posts/鸿蒙 Web 容器（六）：离线包和白名单怎么设计.md
+```
+
+### 第 1 步：写 frontmatter
+
+每篇文章**必须**以 frontmatter 开头（项目根目录有现成的 `文章模板.md`，复制改名最省事）：
+
+```md
 ---
-title: "从打车卡片开始，理解 HarmonyOS 聊天卡片链路"   # 必填，文章标题
-description: "一句话摘要，从真实问题出发，简洁清楚。"      # 必填，用于列表/SEO/RSS
-date: 2026-06-08                                      # 必填，发布日期
-updated: 2026-06-08                                   # 选填，更新日期；与 date 相同则不显示「更新」
-tags: ["HarmonyOS", "ArkUI", "SSE"]                   # 选填，标签数组
-category: "HarmonyOS"                                 # 必填，分类（单个）
-source: "原创"                                         # 选填，来源平台，如 juejin / 原创
-sourceUrl: "https://juejin.cn/post/xxx"               # 选填，原文链接（有才写，必须是合法 URL）
-draft: false                                          # 选填，true 时仅本地可见，构建时不输出
+title: "鸿蒙 Web 容器（六）：离线包和白名单怎么设计"
+description: "这篇文章记录我如何理解 Web 容器里的离线包、白名单和页面加载安全。"
+date: 2026-06-17
+updated: 2026-06-17
+tags: ["HarmonyOS", "ArkWeb", "Web容器", "ASCF"]
+category: "Web容器"
+source: "original"
+sourceUrl: ""
+draft: false
 ---
 ```
 
-字段在 `src/content/config.ts` 中用 Zod 校验，写错会在 `npm run build` 时报错。
+字段含义（在 `src/content/config.ts` 用 Zod 校验，写错会在 `npm run check` / `npm run build` 时直接报错）：
+
+| 字段 | 必填 | 说明 |
+|---|---|---|
+| `title` | ✅ | 文章标题，列表页 / SEO / 文章页大标题都用它 |
+| `description` | ✅ | 一句话摘要，列表、SEO、RSS 都会用 |
+| `date` | ✅ | 发布日期，文章按它倒序排列 |
+| `updated` | 选填 | 更新日期；与 `date` 相同则不显示「更新」 |
+| `tags` | 选填 | 字符串数组，自动生成 `/tags` 统计 |
+| `category` | ✅ | 单个分类 |
+| `source` | 选填 | 来源标识，如 `original` / `juejin` |
+| `sourceUrl` | 选填 | 原文链接；**没有就留空字符串 `""`**，有就必须是合法 URL |
+| `draft` | 选填 | `false` 正式发布；`true` 草稿，仅本地可见、构建不输出 |
+
+### 第 2 步：写正文
+
+frontmatter 下面直接写正文，**从二级标题 `##` 开始**：
+
+```md
+## 为什么要写这个
+
+...
+```
+
+> 注意：正文里**不要再写一级标题 `#`**。文章大标题由 frontmatter 的 `title` 自动渲染，
+> 正文再写 `#` 会出现两个一级标题。
+
+### 几条约定
+
+- 文件名**可以用中文**，URL 会**根据文件名自动生成**（空格换成连字符）。
+  - `WebSocket 与 SSE 区别.md` → `/posts/WebSocket-与-SSE-区别`
+  - `动态加载与延迟加载.md` → `/posts/动态加载与延迟加载`
+- ❌ 不要把文章放到 `public/` 目录（那里是原样拷贝的静态资源）
+- ❌ 不要把文章放到项目根目录
+- ❌ 不要直接改页面 HTML——内容只通过 Markdown 管理
+
+### 第 3 步：本地检查
+
+```bash
+npm run dev      # 浏览器看效果（草稿也能看到）
+npm run check    # 校验类型和 frontmatter
+npm run build    # 确认能正常构建
+```
+
+### 第 4 步：上线
+
+提交并推送：
+
+```bash
+git add .
+git commit -m "新增文章：文章标题"
+git push
+```
+
+如果服务器是手动部署，则在服务器上拉取最新代码并重新构建：
+
+```bash
+git pull
+npm install      # 依赖有变化时才需要
+npm run build
+```
+
+然后让 Nginx 指向 `dist` 目录（Nginx 配置见下方「构建与部署」）。
 
 ### 功能说明
 

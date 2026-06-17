@@ -22,6 +22,7 @@ const sourceLabel: Record<string, string> = {
   juejin: '掘金',
   zhihu: '知乎',
   blog: '原文',
+  original: '原文',
 };
 ---
 
@@ -48,6 +49,14 @@ const sourceLabel: Record<string, string> = {
         )}
         <span class="dot">·</span>
         <span>{minutes} 分钟阅读</span>
+        {data.sourceUrl && (
+          <>
+            <span class="dot">·</span>
+            <a class="post-source-link" href={data.sourceUrl} target="_blank" rel="noopener">
+              {sourceLabel[data.source ?? ''] ?? '原文'} ↗
+            </a>
+          </>
+        )}
       </div>
       {data.description && <p class="post-summary">{data.description}</p>}
       {data.tags.length > 0 && (
@@ -62,15 +71,6 @@ const sourceLabel: Record<string, string> = {
     <Prose>
       <slot />
     </Prose>
-
-    {data.sourceUrl && (
-      <p class="post-source">
-        原文发布于
-        <a href={data.sourceUrl} target="_blank" rel="noopener">
-          {sourceLabel[data.source ?? ''] ?? data.source ?? '原文链接'}
-        </a>
-      </p>
-    )}
   </article>
 
   <nav class="post-nav" aria-label="文章导航">
@@ -134,12 +134,13 @@ const sourceLabel: Record<string, string> = {
     flex-wrap: wrap;
     gap: 12px;
   }
-  .post-source {
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
+  .post-source-link {
     color: var(--muted);
-    font-size: 0.9rem;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .post-source-link:hover {
+    color: var(--link);
   }
 
   .post-nav {

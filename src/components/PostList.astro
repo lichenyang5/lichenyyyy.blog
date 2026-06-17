@@ -16,26 +16,28 @@ const { posts, showDescription = true } = Astro.props;
   {
     posts.map((post) => (
       <li class="post-item">
-        <div class="post-meta">
-          <time datetime={toISODate(post.data.date)}>{formatDate(post.data.date)}</time>
-          <span class="dot">·</span>
-          <span>{post.data.category}</span>
-          <span class="dot">·</span>
-          <span>{readingTime(post.body)} 分钟</span>
-        </div>
-        <h3 class="post-title">
+        <h2 class="post-title">
           <a href={`/posts/${post.id}/`}>{post.data.title}</a>
-        </h3>
+        </h2>
         {showDescription && post.data.description && (
           <p class="post-desc">{post.data.description}</p>
         )}
-        {post.data.tags.length > 0 && (
-          <div class="post-tags">
-            {post.data.tags.map((tag) => (
-              <Tag tag={tag} />
-            ))}
+        <div class="post-foot">
+          <div class="post-meta">
+            <time datetime={toISODate(post.data.date)}>{formatDate(post.data.date)}</time>
+            <span class="dot">·</span>
+            <span>{post.data.category}</span>
+            <span class="dot">·</span>
+            <span>{readingTime(post.body)} 分钟</span>
           </div>
-        )}
+          {post.data.tags.length > 0 && (
+            <div class="post-tags">
+              {post.data.tags.map((tag) => (
+                <Tag tag={tag} />
+              ))}
+            </div>
+          )}
+        </div>
       </li>
     ))
   }
@@ -48,7 +50,7 @@ const { posts, showDescription = true } = Astro.props;
     padding: 0;
   }
   .post-item {
-    padding-block: 26px;
+    padding-block: 28px;
     border-bottom: 1px solid var(--border);
   }
   .post-item:first-child {
@@ -56,6 +58,35 @@ const { posts, showDescription = true } = Astro.props;
   }
   .post-item:last-child {
     border-bottom: none;
+  }
+  .post-title {
+    margin: 0;
+    font-size: 1.2rem; /* ~19px */
+    font-weight: 650;
+    line-height: 1.45;
+  }
+  .post-title a {
+    color: var(--text);
+    transition: color 0.15s ease;
+  }
+  .post-title a:hover {
+    color: var(--link);
+    text-decoration: none;
+  }
+  .post-desc {
+    margin: 9px 0 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  /* meta + 标签放在底部一行，掘金式的轻量信息行 */
+  .post-foot {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-top: 12px;
   }
   .post-meta {
     display: flex;
@@ -69,27 +100,7 @@ const { posts, showDescription = true } = Astro.props;
   .dot {
     color: var(--border);
   }
-  .post-title {
-    margin: 6px 0 0;
-    font-size: 1.2rem;
-    font-weight: 650;
-    line-height: 1.4;
-  }
-  .post-title a {
-    color: var(--text);
-  }
-  .post-title a:hover {
-    color: var(--link);
-    text-decoration: none;
-  }
-  .post-desc {
-    margin: 8px 0 0;
-    color: var(--muted);
-    font-size: 0.95rem;
-    line-height: 1.7;
-  }
   .post-tags {
-    margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
