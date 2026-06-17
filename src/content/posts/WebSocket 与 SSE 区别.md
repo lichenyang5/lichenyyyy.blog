@@ -104,7 +104,7 @@ req.requestInStream(url, { method: http.RequestMethod.POST, /* ... */ })
 
 ## 三、WebSocket：一条「两边都能说话」的电话线
 
-WebSocket 就不一样了。
+WebSocket  就不一样了。
 
 **类比：它像打电话。** 接通之后，**两头都能随时开口**，你一句我一句，不用挂了重拨。这就是所谓的「全双工」——一条线，双向跑。
 
