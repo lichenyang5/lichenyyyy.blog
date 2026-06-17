@@ -1,0 +1,77 @@
+---
+import { SITE, NAV } from '../consts';
+
+const path = Astro.url.pathname;
+// 当前栏目高亮：首段路径匹配即可（/posts/xxx 也算 Posts 选中）
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
+---
+
+<header class="site-header">
+  <div class="container container--wide header-inner">
+    <a href="/" class="brand">{SITE.title}</a>
+    <nav class="nav" aria-label="主导航">
+      {
+        NAV.map((item) => (
+          <a
+            href={item.href}
+            class:list={['nav-link', { active: isActive(item.href) }]}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--border);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 58px;
+    padding-block: 10px;
+    flex-wrap: wrap;
+  }
+  .brand {
+    font-weight: 650;
+    font-size: 1.05rem;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .brand:hover {
+    text-decoration: none;
+    color: var(--link);
+  }
+  .nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  .nav-link {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .nav-link:hover {
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-link.active {
+    color: var(--text);
+    font-weight: 600;
+  }
+  @media (max-width: 420px) {
+    .nav {
+      gap: 14px;
+    }
+    .nav-link {
+      font-size: 0.9rem;
+    }
+  }
+</style>

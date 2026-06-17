@@ -1,0 +1,162 @@
+/* ============================================================
+   正文排版 —— 舒服的阅读体验
+   行高 1.8 / 段落间距清楚 / 标题层级明显 / 代码块清晰 / 移动端不挤
+   ============================================================ */
+
+.prose {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* 段落与间距 */
+.prose p {
+  margin-block: 0 1.25em;
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+/* 标题层级：靠字号、字重、上方留白拉开层次 */
+.prose h2 {
+  font-size: 1.5em;
+  font-weight: 650;
+  line-height: 1.35;
+  margin-block: 2em 0.8em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--border);
+}
+
+.prose h3 {
+  font-size: 1.2em;
+  font-weight: 650;
+  margin-block: 1.8em 0.6em;
+}
+
+.prose h4 {
+  font-size: 1.05em;
+  font-weight: 650;
+  margin-block: 1.5em 0.5em;
+}
+
+/* 标题锚点（hover 时出现 #） */
+.prose :is(h2, h3, h4) {
+  scroll-margin-top: 24px;
+}
+
+/* 链接：正文里的链接带下划线，克制的蓝 */
+.prose a {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+.prose a:hover {
+  color: var(--link-hover);
+}
+
+/* 列表 */
+.prose :is(ul, ol) {
+  margin-block: 0 1.25em;
+  padding-left: 1.4em;
+}
+.prose li {
+  margin-block: 0.35em;
+}
+.prose li::marker {
+  color: var(--muted);
+}
+.prose li > :is(ul, ol) {
+  margin-block: 0.35em;
+}
+
+/* 引用块：左侧细线，灰字，不做厚重背景 */
+.prose blockquote {
+  margin: 1.5em 0;
+  padding: 0.2em 0 0.2em 1.1em;
+  border-left: 3px solid var(--border);
+  color: var(--muted);
+}
+.prose blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* 行内代码 */
+.prose :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--code-bg);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  word-break: break-word;
+}
+
+/* 代码块：浅灰背景、圆角 8px、横向滚动 */
+.prose pre {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  line-height: 1.6;
+  background: var(--code-bg) !important;
+  padding: 16px 18px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  overflow-x: auto;
+  margin-block: 1.4em;
+  -webkit-overflow-scrolling: touch;
+}
+.prose pre > code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+  white-space: pre;
+}
+
+/* 表格：细线、留白，不做厚重卡片 */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-block: 1.6em;
+  font-size: 0.95em;
+  display: block;
+  overflow-x: auto;
+}
+.prose :is(th, td) {
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+.prose th {
+  background: var(--code-bg);
+  font-weight: 650;
+}
+
+/* 图片 */
+.prose img {
+  display: block;
+  margin: 1.6em auto;
+  border-radius: 8px;
+}
+
+/* 分隔线 */
+.prose hr {
+  margin-block: 2.5em;
+}
+
+/* 强调 */
+.prose strong {
+  font-weight: 650;
+  color: var(--text);
+}
+
+/* 移动端：略收紧字号，保证左右不挤 */
+@media (max-width: 480px) {
+  .prose pre {
+    border-radius: 6px;
+    padding: 14px;
+  }
+}

@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404">
+  <div class="notfound">
+    <p class="code">404</p>
+    <p class="msg">这里暂时什么也没有。</p>
+    <p class="back"><a href="/">返回首页</a></p>
+  </div>
+</BaseLayout>
+
+<style>
+  .notfound {
+    padding-block: 60px 40px;
+  }
+  .code {
+    font-size: 3rem;
+    font-weight: 650;
+    color: var(--border);
+    margin: 0 0 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .msg {
+    font-size: 1.1rem;
+    margin: 0 0 20px;
+  }
+  .back {
+    margin: 0;
+  }
+</style>

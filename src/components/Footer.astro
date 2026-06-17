@@ -1,0 +1,46 @@
+---
+import { SITE, SOCIAL } from '../consts';
+const year = new Date().getUTCFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container container--wide footer-inner">
+    <div class="footer-links">
+      <a href={SOCIAL.github} rel="me noopener" target="_blank">GitHub</a>
+      <a href={SOCIAL.juejin} rel="me noopener" target="_blank">掘金</a>
+      <a href="/rss.xml">RSS</a>
+    </div>
+    <p class="footer-copy">© {year} {SITE.title}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding-block: 28px;
+    margin-top: 24px;
+  }
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .footer-links {
+    display: flex;
+    gap: 18px;
+  }
+  .footer-links a {
+    color: var(--muted);
+  }
+  .footer-links a:hover {
+    color: var(--text);
+    text-decoration: none;
+  }
+  .footer-copy {
+    margin: 0;
+  }
+</style>

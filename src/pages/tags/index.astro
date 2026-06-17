@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedPosts, getAllTags } from '../../utils/posts';
+
+const posts = await getPublishedPosts();
+const tags = getAllTags(posts);
+---
+
+<BaseLayout title="标签" description="按标签浏览文章。">
+  <header class="page-head">
+    <h1 class="page-title">标签</h1>
+    <p class="page-sub">共 {tags.length} 个标签。</p>
+  </header>
+
+  {tags.length > 0 ? (
+    <ul class="tag-cloud">
+      {tags.map(({ tag, count }) => (
+        <li>
+          <a class="tag-chip" href={`/tags/${tag}/`}>
+            <span class="hash">#</span>{tag}
+            <span class="count">{count}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p class="empty">还没有标签。</p>
+  )}
+</BaseLayout>
+
+<style>
+  .page-head {
+    margin-bottom: 28px;
+  }
+  .page-title {
+    font-size: 1.7rem;
+    margin: 0 0 6px;
+  }
+  .page-sub {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .tag-cloud {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 12px;
+  }
+  .tag-chip {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 2px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 14px;
+    color: var(--text);
+    font-size: 0.92rem;
+  }
+  .tag-chip:hover {
+    border-color: var(--link);
+    color: var(--link);
+    text-decoration: none;
+  }
+  .hash {
+    color: var(--muted);
+  }
+  .tag-chip:hover .hash {
+    color: var(--link);
+  }
+  .count {
+    margin-left: 5px;
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .empty {
+    color: var(--muted);
+  }
+</style>

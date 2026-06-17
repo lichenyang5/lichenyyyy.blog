@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, SOCIAL, FOCUS } from '../consts';
+---
+
+<BaseLayout title="关于" description="关于 lichenyyyy：一名前端转 HarmonyOS 的开发者。">
+  <article class="about">
+    <h1 class="about-title">关于</h1>
+
+    <div class="about-body">
+      <p>我是一名前端转 HarmonyOS 的开发者。</p>
+      <p>
+        过去一年里，我主要做前端开发，也陆续接触过 Next.js、Dify、Docker、uni-app、iOS、Expo、Android
+        等技术和工具。后来开始进入 HarmonyOS 开发，最初从 ArkUI 组件、卡片复刻和业务页面做起，逐步学习
+        ArkTS、RDB、SSE、WebSocket、状态管理、调试工具和工程分层。
+      </p>
+      <p>
+        现在我关注的方向是 ASCF、小程序容器、WebView、JSBridge，以及鸿蒙与前端能力之间的连接方式。
+      </p>
+      <p>
+        这个博客不是为了包装自己，而是为了记录真实的学习路径：遇到什么问题、为什么会卡住、怎么定位、最后怎么解决。
+      </p>
+    </div>
+
+    <section class="about-section">
+      <h2>当前身份</h2>
+      <p>前端转 HarmonyOS 开发者。</p>
+    </section>
+
+    <section class="about-section">
+      <h2>技术方向</h2>
+      <ul class="focus">
+        {FOCUS.map((f) => <li>{f}</li>)}
+      </ul>
+    </section>
+
+    <section class="about-section">
+      <h2>联系方式</h2>
+      <ul class="contact">
+        <li><span class="k">GitHub</span><a href={SOCIAL.github} target="_blank" rel="me noopener">{SOCIAL.github}</a></li>
+        <li><span class="k">掘金</span><a href={SOCIAL.juejin} target="_blank" rel="me noopener">{SOCIAL.juejin}</a></li>
+        <li><span class="k">站点</span><a href={SITE.url} target="_blank" rel="noopener">{SITE.url}</a></li>
+        <li><span class="k">邮箱</span><a href={`mailto:${SOCIAL.email}`}>{SOCIAL.email}</a></li>
+      </ul>
+      <p class="note">（以上为占位，后续替换成真实账号与邮箱。）</p>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .about-title {
+    font-size: 1.7rem;
+    margin: 0 0 24px;
+  }
+  .about-body p {
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .about-section {
+    margin-top: 36px;
+  }
+  .about-section h2 {
+    font-size: 1.05rem;
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .about-section p {
+    margin: 0;
+    line-height: 1.8;
+  }
+  .focus {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+  }
+  .focus li {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 5px 14px;
+    font-size: 0.9rem;
+  }
+  .contact {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .contact li {
+    display: flex;
+    gap: 14px;
+    padding-block: 6px;
+    font-size: 0.95rem;
+    flex-wrap: wrap;
+  }
+  .contact .k {
+    color: var(--muted);
+    min-width: 56px;
+  }
+  .note {
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+</style>

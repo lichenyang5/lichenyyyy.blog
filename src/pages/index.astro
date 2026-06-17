@@ -1,0 +1,145 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostList from '../components/PostList.astro';
+import { getPublishedPosts } from '../utils/posts';
+import { FOCUS, SOCIAL } from '../consts';
+
+const posts = await getPublishedPosts();
+const recent = posts.slice(0, 5);
+---
+
+<BaseLayout wide>
+  <section class="hero">
+    <h1 class="hero-title">你好，我是 lichenyyyy。</h1>
+    <p class="hero-text">
+      一名前端转 HarmonyOS 的开发者。过去一年做过前端开发，接触过 Next.js、Dify、Docker、uni-app、iOS、Expo、Android
+      等方向；现在正在深入 ArkUI、ASCF、小程序容器、WebView 与 JSBridge。
+    </p>
+    <p class="hero-text">
+      这里记录我的项目、调试、复盘、技术文章和生活杂谈。
+    </p>
+  </section>
+
+  <section class="block">
+    <h2 class="block-title">当前关注方向</h2>
+    <ul class="focus-list">
+      {FOCUS.map((f) => <li class="focus-item">{f}</li>)}
+    </ul>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2 class="block-title">最近文章</h2>
+      <a class="more" href="/posts/">全部文章 →</a>
+    </div>
+    {recent.length > 0 ? (
+      <PostList posts={recent} />
+    ) : (
+      <p class="empty">还没有文章。</p>
+    )}
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2 class="block-title">项目</h2>
+      <a class="more" href="/projects/">查看项目 →</a>
+    </div>
+    <p class="block-lead">
+      做过的几个东西：HarmonyOS AI 聊天 Demo、ASCF Web 容器与 JSBridge Demo、HarmonyOS 学习日报，以及早期的微信壁纸小程序。
+    </p>
+  </section>
+
+  <section class="block">
+    <h2 class="block-title">在别处</h2>
+    <div class="links">
+      <a href={SOCIAL.github} target="_blank" rel="me noopener">GitHub</a>
+      <a href={SOCIAL.juejin} target="_blank" rel="me noopener">掘金</a>
+      <a href="/rss.xml">RSS</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-block: 8px 12px;
+  }
+  .hero-title {
+    font-size: 1.9rem;
+    line-height: 1.3;
+    margin: 0 0 18px;
+    letter-spacing: -0.01em;
+  }
+  .hero-text {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text);
+    margin: 0 0 14px;
+    max-width: 680px;
+  }
+  .hero-text:last-child {
+    margin-bottom: 0;
+  }
+
+  .block {
+    margin-top: 52px;
+  }
+  .block-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .block-title {
+    font-size: 0.95rem;
+    font-weight: 650;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0 0 18px;
+  }
+  .block-head .block-title {
+    margin: 0;
+  }
+  .more {
+    font-size: 0.88rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .more:hover {
+    color: var(--link);
+    text-decoration: none;
+  }
+
+  .focus-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+  }
+  .focus-item {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 5px 14px;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  .block-lead {
+    color: var(--muted);
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  .links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .empty {
+    color: var(--muted);
+  }
+</style>

@@ -1,0 +1,138 @@
+/* ============================================================
+   全局样式 —— 极简、白底、文字优先、留白充足
+   用 CSS Variables 统一管理颜色与尺寸
+   ============================================================ */
+
+:root {
+  --bg: #ffffff;
+  --text: #1f2328;
+  --muted: #6a737d;
+  --border: #e5e7eb;
+  --link: #2563eb;
+  --link-hover: #1d4ed8;
+  --code-bg: #f6f8fa;
+  --selection: #dbeafe;
+
+  --max-width: 760px; /* 正文 */
+  --wide-width: 880px; /* 首页 */
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+
+  --pad-mobile: 20px;
+  --pad-desktop: 24px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--selection);
+}
+
+/* ---- 布局容器 ---- */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--pad-mobile);
+}
+
+.container--wide {
+  max-width: var(--wide-width);
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-inline: var(--pad-desktop);
+  }
+}
+
+/* 页面主体：上下留白充足 */
+main {
+  display: block;
+  padding-block: 48px 72px;
+}
+
+/* ---- 链接 ---- */
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---- 标题 ---- */
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.3;
+  font-weight: 650;
+  color: var(--text);
+}
+
+/* ---- 细线分隔 ---- */
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin-block: 40px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---- 行内代码（非 prose 区域兜底） ---- */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+/* ---- 可访问性：跳过导航 ---- */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--text);
+  color: var(--bg);
+  padding: 8px 14px;
+  border-radius: 6px;
+  z-index: 100;
+}
+.skip-link:focus {
+  left: 12px;
+  top: 12px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+  border-radius: 2px;
+}

@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublishedPosts, groupByYearMonth } from '../utils/posts';
+import { formatDate, toISODate } from '../utils/date';
+
+const posts = await getPublishedPosts();
+const archive = groupByYearMonth(posts);
+---
+
+<BaseLayout title="归档" description="按年月归档的全部文章。">
+  <header class="page-head">
+    <h1 class="page-title">归档</h1>
+    <p class="page-sub">共 {posts.length} 篇。</p>
+  </header>
+
+  {archive.map((year) => (
+    <section class="year">
+      <h2 class="year-title">{year.year}</h2>
+      {year.months.map((m) => (
+        <div class="month">
+          <div class="month-label">{m.month}</div>
+          <ul class="month-posts">
+            {m.posts.map((post) => (
+              <li class="row">
+                <a class="row-link" href={`/posts/${post.id}/`}>{post.data.title}</a>
+                <time class="row-date" datetime={toISODate(post.data.date)}>
+                  {formatDate(post.data.date)}
+                </time>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </section>
+  ))}
+</BaseLayout>
+
+<style>
+  .page-head {
+    margin-bottom: 36px;
+  }
+  .page-title {
+    font-size: 1.7rem;
+    margin: 0 0 6px;
+  }
+  .page-sub {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .year {
+    margin-bottom: 40px;
+  }
+  .year-title {
+    font-size: 1.4rem;
+    font-variant-numeric: tabular-nums;
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .month {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 8px 16px;
+    margin-bottom: 14px;
+  }
+  .month-label {
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+    padding-top: 3px;
+  }
+  .month-posts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding-block: 5px;
+  }
+  .row-link {
+    color: var(--text);
+  }
+  .row-link:hover {
+    color: var(--link);
+    text-decoration: none;
+  }
+  .row-date {
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  @media (max-width: 520px) {
+    .month {
+      grid-template-columns: 36px 1fr;
+    }
+    .row {
+      flex-direction: column;
+      gap: 2px;
+    }
+  }
+</style>

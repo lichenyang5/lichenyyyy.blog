@@ -1,0 +1,188 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Prose from '../components/Prose.astro';
+import Tag from '../components/Tag.astro';
+import type { Post } from '../utils/posts';
+import { readingTime } from '../utils/posts';
+import { formatDate, toISODate } from '../utils/date';
+
+interface Props {
+  post: Post;
+  newer: Post | null;
+  older: Post | null;
+}
+
+const { post, newer, older } = Astro.props;
+const { data } = post;
+const minutes = readingTime(post.body);
+const hasUpdated =
+  data.updated && data.updated.valueOf() !== data.date.valueOf();
+
+const sourceLabel: Record<string, string> = {
+  juejin: '掘金',
+  zhihu: '知乎',
+  blog: '原文',
+};
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  type="article"
+  publishedTime={post.data.date.toISOString()}
+  modifiedTime={(post.data.updated ?? post.data.date).toISOString()}
+>
+  <article class="post">
+    <header class="post-header">
+      <div class="post-cat">{data.category}</div>
+      <h1 class="post-h1">{data.title}</h1>
+      <div class="post-meta">
+        <time datetime={toISODate(data.date)}>{formatDate(data.date)} 发布</time>
+        {hasUpdated && (
+          <>
+            <span class="dot">·</span>
+            <time datetime={toISODate(data.updated!)}>
+              {formatDate(data.updated!)} 更新
+            </time>
+          </>
+        )}
+        <span class="dot">·</span>
+        <span>{minutes} 分钟阅读</span>
+      </div>
+      {data.description && <p class="post-summary">{data.description}</p>}
+      {data.tags.length > 0 && (
+        <div class="post-tags">
+          {data.tags.map((tag) => (
+            <Tag tag={tag} />
+          ))}
+        </div>
+      )}
+    </header>
+
+    <Prose>
+      <slot />
+    </Prose>
+
+    {data.sourceUrl && (
+      <p class="post-source">
+        原文发布于
+        <a href={data.sourceUrl} target="_blank" rel="noopener">
+          {sourceLabel[data.source ?? ''] ?? data.source ?? '原文链接'}
+        </a>
+      </p>
+    )}
+  </article>
+
+  <nav class="post-nav" aria-label="文章导航">
+    {newer ? (
+      <a class="post-nav-link prev" href={`/posts/${newer.id}/`}>
+        <span class="post-nav-dir">← 上一篇</span>
+        <span class="post-nav-title">{newer.data.title}</span>
+      </a>
+    ) : (
+      <span />
+    )}
+    {older ? (
+      <a class="post-nav-link next" href={`/posts/${older.id}/`}>
+        <span class="post-nav-dir">下一篇 →</span>
+        <span class="post-nav-title">{older.data.title}</span>
+      </a>
+    ) : (
+      <span />
+    )}
+  </nav>
+</BaseLayout>
+
+<style>
+  .post-header {
+    margin-bottom: 36px;
+  }
+  .post-cat {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+  }
+  .post-h1 {
+    font-size: 1.85rem;
+    line-height: 1.3;
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+  .post-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .dot {
+    color: var(--border);
+  }
+  .post-summary {
+    margin: 18px 0 0;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.75;
+    padding-left: 14px;
+    border-left: 3px solid var(--border);
+  }
+  .post-tags {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .post-source {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .post-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 48px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+  }
+  .post-nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .post-nav-link:hover {
+    text-decoration: none;
+  }
+  .post-nav-link.next {
+    text-align: right;
+  }
+  .post-nav-dir {
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+  .post-nav-title {
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  .post-nav-link:hover .post-nav-title {
+    color: var(--link);
+  }
+  @media (max-width: 520px) {
+    .post-nav {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .post-nav-link.next {
+      text-align: left;
+    }
+    .post-h1 {
+      font-size: 1.6rem;
+    }
+  }
+</style>

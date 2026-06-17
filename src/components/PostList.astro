@@ -1,0 +1,97 @@
+---
+import type { Post } from '../utils/posts';
+import { readingTime } from '../utils/posts';
+import { formatDate, toISODate } from '../utils/date';
+import Tag from './Tag.astro';
+
+interface Props {
+  posts: Post[];
+  /** 是否显示摘要（首页可关掉以更紧凑，列表页默认开） */
+  showDescription?: boolean;
+}
+const { posts, showDescription = true } = Astro.props;
+---
+
+<ul class="post-list">
+  {
+    posts.map((post) => (
+      <li class="post-item">
+        <div class="post-meta">
+          <time datetime={toISODate(post.data.date)}>{formatDate(post.data.date)}</time>
+          <span class="dot">·</span>
+          <span>{post.data.category}</span>
+          <span class="dot">·</span>
+          <span>{readingTime(post.body)} 分钟</span>
+        </div>
+        <h3 class="post-title">
+          <a href={`/posts/${post.id}/`}>{post.data.title}</a>
+        </h3>
+        {showDescription && post.data.description && (
+          <p class="post-desc">{post.data.description}</p>
+        )}
+        {post.data.tags.length > 0 && (
+          <div class="post-tags">
+            {post.data.tags.map((tag) => (
+              <Tag tag={tag} />
+            ))}
+          </div>
+        )}
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .post-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .post-item {
+    padding-block: 26px;
+    border-bottom: 1px solid var(--border);
+  }
+  .post-item:first-child {
+    padding-top: 4px;
+  }
+  .post-item:last-child {
+    border-bottom: none;
+  }
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .dot {
+    color: var(--border);
+  }
+  .post-title {
+    margin: 6px 0 0;
+    font-size: 1.2rem;
+    font-weight: 650;
+    line-height: 1.4;
+  }
+  .post-title a {
+    color: var(--text);
+  }
+  .post-title a:hover {
+    color: var(--link);
+    text-decoration: none;
+  }
+  .post-desc {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .post-tags {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+</style>
