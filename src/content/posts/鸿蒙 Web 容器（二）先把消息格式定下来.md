@@ -1,5 +1,5 @@
 ---
-title: "鸿蒙 Web 容器（二）：H5 和 ArkTS 说话前，先定一份「协议」"
+title: "鸿蒙 Web 容器（二）：H5 和 ArkTS 通信前，先定一份协议"
 description: "H5 里的 JS 和原生 ArkTS 怎么互相说话？通信之前先别急着写逻辑——这篇用「快递面单」的比方，把 JSBridge 的请求与响应消息格式定死。"
 date: 2026-06-13
 updated: 2026-06-13

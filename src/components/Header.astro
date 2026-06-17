@@ -1,6 +1,12 @@
 ---
 import { SITE, NAV } from '../consts';
 
+interface Props {
+  /** 与当前页主内容同宽，保证 header 和正文左右对齐 */
+  wide?: boolean;
+}
+const { wide = false } = Astro.props;
+
 const path = Astro.url.pathname;
 // 当前栏目高亮：首段路径匹配即可（/posts/xxx 也算 Posts 选中）
 const isActive = (href: string) =>
@@ -8,7 +14,7 @@ const isActive = (href: string) =>
 ---
 
 <header class="site-header">
-  <div class="container container--wide header-inner">
+  <div class:list={['container', { 'container--wide': wide }, 'header-inner']}>
     <a href="/" class="brand">{SITE.title}</a>
     <nav class="nav" aria-label="主导航">
       {

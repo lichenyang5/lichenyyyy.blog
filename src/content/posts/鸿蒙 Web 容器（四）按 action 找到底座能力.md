@@ -1,5 +1,5 @@
 ---
-title: "鸿蒙 Web 容器（四）：ArkTS 拿到请求后，怎么「按 action 找能力」？"
+title: "鸿蒙 Web 容器（四）：ArkTS 拿到请求后，怎么按 action 找能力？"
 description: "ArkTS 收到了 H5 的请求，接下来怎么按 action 找到对应能力、执行、再包成统一回执？这篇把小程序「按 API 名分发到底座」那套亲手复刻一遍。"
 date: 2026-06-15
 updated: 2026-06-15

@@ -1,5 +1,5 @@
 ---
-title: "鸿蒙 Web 容器（五·完结）：闭环回传、容器治理，兼谈 AtomicServiceEnhancedWeb"
+title: "鸿蒙 Web 容器（五）：闭环回传、容器治理，兼谈 AtomicServiceEnhancedWeb"
 description: "差最后一步——把结果送回 H5，闭环就成了。这篇讲 runJavaScript 回传、一个容易踩的重入坑、容器治理，并对比标准 Web 与 AtomicServiceEnhancedWeb。"
 date: 2026-06-16
 updated: 2026-06-16

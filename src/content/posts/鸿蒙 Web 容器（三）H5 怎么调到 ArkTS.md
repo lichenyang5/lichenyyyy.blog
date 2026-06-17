@@ -1,5 +1,5 @@
 ---
-title: "鸿蒙 Web 容器（三）：H5 怎么「调」到 ArkTS？"
+title: "鸿蒙 Web 容器（三）：H5 怎么调用到 ArkTS？"
 description: "协议定好了，这篇跑通链路的上半场：用 javaScriptProxy 给 H5 装一部「内线电话」，让网页里的点击真正送达原生 ArkTS。"
 date: 2026-06-14
 updated: 2026-06-14

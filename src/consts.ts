@@ -28,12 +28,13 @@ export const NAV: { href: string; label: string }[] = [
 
 /**
  * 外部链接 / 联系方式。
- * TODO: 把下面的占位地址换成你真实的 GitHub、掘金、邮箱。
+ * email 暂无正式邮箱：先通过 GitHub / 掘金联系（见 about 页）。
  */
 export const SOCIAL = {
-  github: 'https://github.com/lichenyyyy',
-  juejin: 'https://juejin.cn/user/0000000000000',
-  email: 'hello@lichenyyyy.top',
+  github: 'https://github.com/lichenyang5',
+  juejin: 'https://juejin.cn/user/2921833644950300',
+  /** 暂无正式邮箱，置空；about 页会引导走 GitHub / 掘金 */
+  email: '',
 };
 
 /** 首页「当前关注方向」 */

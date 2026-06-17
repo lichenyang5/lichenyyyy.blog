@@ -1,10 +1,16 @@
 ---
 import { SITE, SOCIAL } from '../consts';
+
+interface Props {
+  /** 与当前页主内容同宽，保证 footer 和正文左右对齐 */
+  wide?: boolean;
+}
+const { wide = false } = Astro.props;
 const year = new Date().getUTCFullYear();
 ---
 
 <footer class="site-footer">
-  <div class="container container--wide footer-inner">
+  <div class:list={['container', { 'container--wide': wide }, 'footer-inner']}>
     <div class="footer-links">
       <a href={SOCIAL.github} rel="me noopener" target="_blank">GitHub</a>
       <a href={SOCIAL.juejin} rel="me noopener" target="_blank">掘金</a>

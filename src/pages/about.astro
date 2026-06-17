@@ -40,9 +40,8 @@ import { SITE, SOCIAL, FOCUS } from '../consts';
         <li><span class="k">GitHub</span><a href={SOCIAL.github} target="_blank" rel="me noopener">{SOCIAL.github}</a></li>
         <li><span class="k">掘金</span><a href={SOCIAL.juejin} target="_blank" rel="me noopener">{SOCIAL.juejin}</a></li>
         <li><span class="k">站点</span><a href={SITE.url} target="_blank" rel="noopener">{SITE.url}</a></li>
-        <li><span class="k">邮箱</span><a href={`mailto:${SOCIAL.email}`}>{SOCIAL.email}</a></li>
+        <li><span class="k">邮箱</span><span class="muted-val">暂时先通过 GitHub / 掘金联系</span></li>
       </ul>
-      <p class="note">（以上为占位，后续替换成真实账号与邮箱。）</p>
     </section>
   </article>
 </BaseLayout>
@@ -99,9 +98,7 @@ import { SITE, SOCIAL, FOCUS } from '../consts';
     color: var(--muted);
     min-width: 56px;
   }
-  .note {
-    margin-top: 14px;
+  .contact .muted-val {
     color: var(--muted);
-    font-size: 0.85rem;
   }
 </style>

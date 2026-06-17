@@ -36,39 +36,29 @@ const archive = groupByYearMonth(posts);
 </BaseLayout>
 
 <style>
-  .page-head {
-    margin-bottom: 36px;
-  }
-  .page-title {
-    font-size: 1.7rem;
-    margin: 0 0 6px;
-  }
-  .page-sub {
-    margin: 0;
-    color: var(--muted);
-    font-size: 0.92rem;
-  }
   .year {
-    margin-bottom: 40px;
+    margin-bottom: 48px;
   }
   .year-title {
-    font-size: 1.4rem;
+    font-size: 1.45rem;
+    font-weight: 650;
     font-variant-numeric: tabular-nums;
-    margin: 0 0 12px;
+    margin: 0 0 16px;
     padding-bottom: 8px;
     border-bottom: 1px solid var(--border);
   }
   .month {
     display: grid;
-    grid-template-columns: 48px 1fr;
-    gap: 8px 16px;
-    margin-bottom: 14px;
+    grid-template-columns: 44px 1fr;
+    gap: 8px 18px;
+    margin-bottom: 22px;
   }
   .month-label {
     color: var(--muted);
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     font-variant-numeric: tabular-nums;
-    padding-top: 3px;
+    padding-top: 4px;
+    text-align: right;
   }
   .month-posts {
     list-style: none;
@@ -84,6 +74,7 @@ const archive = groupByYearMonth(posts);
   }
   .row-link {
     color: var(--text);
+    transition: color 0.15s ease;
   }
   .row-link:hover {
     color: var(--link);

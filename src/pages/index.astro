@@ -21,9 +21,20 @@ const recent = posts.slice(0, 5);
   </section>
 
   <section class="block">
-    <h2 class="block-title">当前关注方向</h2>
-    <ul class="focus-list">
-      {FOCUS.map((f) => <li class="focus-item">{f}</li>)}
+    <h2 class="block-title">从这里开始读</h2>
+    <ul class="start-list">
+      <li class="start-item">
+        <a class="start-link" href="/tags/Web容器/">ASCF / Web 容器系列</a>
+        <p class="start-desc">记录我如何理解 WebView、JSBridge、Bridge 协议和容器治理。</p>
+      </li>
+      <li class="start-item">
+        <a class="start-link" href="/tags/HarmonyOS/">HarmonyOS 基础系列</a>
+        <p class="start-desc">记录 ArkUI、ArkTS、RDB、模块化和工程实践中的基础问题。</p>
+      </li>
+      <li class="start-item">
+        <a class="start-link" href="/posts/">调试复盘</a>
+        <p class="start-desc">记录真实开发中遇到的问题、定位过程和解决方式。</p>
+      </li>
     </ul>
   </section>
 
@@ -37,6 +48,13 @@ const recent = posts.slice(0, 5);
     ) : (
       <p class="empty">还没有文章。</p>
     )}
+  </section>
+
+  <section class="block">
+    <h2 class="block-title">当前关注方向</h2>
+    <ul class="focus-list">
+      {FOCUS.map((f) => <li class="focus-item">{f}</li>)}
+    </ul>
   </section>
 
   <section class="block">
@@ -125,6 +143,38 @@ const recent = posts.slice(0, 5);
     padding: 5px 14px;
     font-size: 0.9rem;
     color: var(--text);
+  }
+
+  /* 从这里开始读：轻量列表 + 细线分隔，不做卡片 */
+  .start-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .start-item {
+    padding-block: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .start-item:first-child {
+    padding-top: 0;
+  }
+  .start-item:last-child {
+    border-bottom: none;
+  }
+  .start-link {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .start-link:hover {
+    color: var(--link);
+    text-decoration: none;
+  }
+  .start-desc {
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
   }
 
   .block-lead {
