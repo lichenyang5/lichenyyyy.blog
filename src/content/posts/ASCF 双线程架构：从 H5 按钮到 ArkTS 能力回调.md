@@ -1,8 +1,12 @@
 ---
 title: "ASCF 双线程架构：从 H5 按钮到 ArkTS 能力回调"
 description: "用 harmony-ASCF-demo 的 JSBridge 链路，理解逻辑层、UI 层、JavaScriptProxy、runJavaScript 和 action 能力分发。"
-pubDate: 2026-06-24
+date: 2026-06-24
+updated: 2026-06-24
 tags: ["HarmonyOS", "ArkWeb", "ASCF", "JSBridge", "WebView"]
+category: "Web容器"
+source: "original"
+sourceUrl: ""
 draft: false
 ---
 
