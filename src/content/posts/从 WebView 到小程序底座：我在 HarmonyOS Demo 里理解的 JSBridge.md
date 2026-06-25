@@ -9,6 +9,10 @@ tags:
   - ASCF
   - 小程序运行时
 description: "这篇文章从一个 HarmonyOS Web 容器 Demo 出发，聊聊为什么 JSBridge 不只是一个函数调用，而是一套连接 Web 业务层和 Native 底座层的通信协议。"
+category: "Web容器"
+source: "harmony-ASCF-demo"
+sourceUrl: "https://github.com/lichenyang5/harmony-ASCF-demo"
+draft: false
 ---
 
 # 从一个 WebView Demo 开始，理解 ASCF 小程序底座到底在做什么
